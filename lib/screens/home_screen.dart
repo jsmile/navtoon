@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:navtoon/models/webtoon_model.dart';
+
+import '../services/api_service.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  Future<List<WebtoonModel>> webtoonModels = ApiService.getTodayWebtoons();
 
   @override
   Widget build(BuildContext context) {
