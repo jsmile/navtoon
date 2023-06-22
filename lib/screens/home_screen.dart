@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
         title: const Text(
           '오늘의 만화s',
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 23,
             fontWeight: FontWeight.w600,
           ),
         ),
