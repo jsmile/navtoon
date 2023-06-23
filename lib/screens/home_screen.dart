@@ -28,18 +28,15 @@ class HomeScreen extends StatelessWidget {
         future: webtoons,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                debugPrint('*** index : $index');
-                return Text(snapshot.data![index].title);
-              },
-              separatorBuilder: (context, index) {
-                return const SizedBox(
-                  width: 10,
-                );
-              },
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                Expanded(
+                  child: listWebtoons(snapshot),
+                ),
+              ],
             );
           }
           return const Center(
@@ -47,6 +44,50 @@ class HomeScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  ListView listWebtoons(AsyncSnapshot<List<WebtoonModel>> snapshot) {
+    return ListView.separated(
+      padding: const EdgeInsets.all(15),
+      scrollDirection: Axis.horizontal,
+      itemCount: snapshot.data!.length,
+      itemBuilder: (context, index) {
+        var webtoon = snapshot.data![index];
+
+        return Column(
+          children: [
+            Container(
+              width: 180,
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 10,
+                      offset: const Offset(5, 5),
+                    ),
+                  ]),
+              child: Image.network(
+                webtoon.thumb,
+                headers: const {
+                  'Referer': 'https://comic.naver.com', // 403 오류 방지
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(webtoon.title),
+          ],
+        );
+      },
+      separatorBuilder: (context, index) {
+        return const SizedBox(
+          width: 40,
+        );
+      },
     );
   }
 }
