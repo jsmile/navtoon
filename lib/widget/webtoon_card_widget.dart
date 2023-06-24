@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'detail_catoon_widget.dart';
 
-class Webtoon extends StatelessWidget {
+class WebtoonCard extends StatelessWidget {
   final String id, title, thumb;
 
-  const Webtoon({
+  const WebtoonCard({
     super.key,
     required this.id,
     required this.title,
@@ -20,6 +20,7 @@ class Webtoon extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => DetailCatoon(
+                // Card 상세보기
                 id: id,
                 title: title,
                 thumb: thumb,

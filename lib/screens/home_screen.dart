@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:navtoon/services/api_service.dart';
 
 import '../models/webtoon_model.dart';
-import '../widget/webtoon_widget.dart';
+import '../widget/webtoon_card_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  final Future<List<WebtoonModel>> webtoons = ApiService.getTodayWebtoons();
+  final Future<List<WebtoonModel>> webtoonCards = ApiService.getTodayWebtoons();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
         elevation: 2,
       ),
       body: FutureBuilder(
-        future: webtoons,
+        future: webtoonCards,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Column(
@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                   height: 30,
                 ),
                 Expanded(
-                  child: listWebtoons(snapshot),
+                  child: listWebtoonCards(snapshot),
                 ),
               ],
             );
@@ -48,18 +48,18 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  ListView listWebtoons(AsyncSnapshot<List<WebtoonModel>> snapshot) {
+  ListView listWebtoonCards(AsyncSnapshot<List<WebtoonModel>> snapshot) {
     return ListView.separated(
       padding: const EdgeInsets.all(15),
       scrollDirection: Axis.horizontal,
       itemCount: snapshot.data!.length,
       itemBuilder: (context, index) {
-        var webtoon = snapshot.data![index];
+        var webtoonCard = snapshot.data![index];
 
-        return Webtoon(
-          id: webtoon.id,
-          title: webtoon.title,
-          thumb: webtoon.thumb,
+        return WebtoonCard(
+          id: webtoonCard.id,
+          title: webtoonCard.title,
+          thumb: webtoonCard.thumb,
         );
       },
       separatorBuilder: (context, index) {
