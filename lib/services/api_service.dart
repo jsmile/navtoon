@@ -19,7 +19,7 @@ class ApiService {
         webtoonModels.add(WebtoonModel.fromJson(webtoonJson));
       }
       // debugPrint('\n*** webtoonModels : $webtoonModels');
-      return webtoonModels;
+      return webtoonModels; // 동기형 data를 비동기형 data로 변환가능 반대 방향은 불가.
     }
     throw Exception('Failed to load data');
   }
