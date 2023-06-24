@@ -29,23 +29,26 @@ class Webtoon extends StatelessWidget {
       },
       child: Column(
         children: [
-          Container(
-            width: 180,
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 10,
-                    offset: const Offset(5, 5),
-                  ),
-                ]),
-            child: Image.network(
-              thumb,
-              headers: const {
-                'Referer': 'https://comic.naver.com', // 403 오류 방지
-              },
+          Hero(
+            tag: id,
+            child: Container(
+              width: 180,
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 10,
+                      offset: const Offset(5, 5),
+                    ),
+                  ]),
+              child: Image.network(
+                thumb,
+                headers: const {
+                  'Referer': 'https://comic.naver.com', // 403 오류 방지
+                },
+              ),
             ),
           ),
           const SizedBox(

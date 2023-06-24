@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:navtoon/models/webtoon_model.dart';
 
@@ -19,7 +18,7 @@ class ApiService {
       for (var webtoonJson in dWebtoonJsons) {
         webtoonModels.add(WebtoonModel.fromJson(webtoonJson));
       }
-      debugPrint('\n*** webtoonModels : $webtoonModels');
+      // debugPrint('\n*** webtoonModels : $webtoonModels');
       return webtoonModels;
     }
     throw Exception('Failed to load data');
