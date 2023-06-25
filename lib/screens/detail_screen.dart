@@ -25,7 +25,8 @@ class _DetailScreenState extends State<DetailScreen> {
   void initState() {
     super.initState();
 
-    webtoonDetail = ApiService.getWebtoonDetailById(widget.id);
+    webtoonDetail =
+        ApiService.getWebtoonDetailById(widget.id); // wedget : 부모의 widget
     webtoonEpisodes = ApiService.getWebtoonEpisodesById(widget.id);
   }
 
@@ -45,39 +46,102 @@ class _DetailScreenState extends State<DetailScreen> {
         centerTitle: true,
         elevation: 2,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            Hero(
-              tag: widget.id,
-              child: Container(
-                width: 180,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        blurRadius: 10,
-                        offset: const Offset(5, 5),
-                      ),
-                    ]),
-                child: Image.network(
-                  widget.thumb,
-                  headers: const {
-                    'Referer': 'https://comic.naver.com', // 403 오류 방지
-                  },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 40,
+            vertical: 30,
+          ),
+          child: Column(
+            children: [
+              Hero(
+                tag: widget.id,
+                child: Container(
+                  width: 180,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 10,
+                          offset: const Offset(5, 5),
+                        ),
+                      ]),
+                  child: Image.network(
+                    widget.thumb,
+                    headers: const {
+                      'Referer': 'https://comic.naver.com', // 403 오류 방지
+                    },
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(widget.title),
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+              FutureBuilder(
+                future: webtoonDetail,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final sAbout = snapshot.data!.about;
+                    final sGenre = snapshot.data!.genre;
+                    final sAge = snapshot.data!.age;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(sAbout),
+                        const SizedBox(height: 10),
+                        Text(
+                          '$sGenre / $sAge',
+                        ),
+                      ],
+                    );
+                  }
+                  return const Text('.....');
+                },
+              ),
+              const SizedBox(height: 20),
+              FutureBuilder(
+                future: webtoonEpisodes,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      children: [
+                        for (var episode in snapshot.data!)
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                            ),
+                            margin: const EdgeInsets.only(bottom: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.green.shade500,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  episode.title,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.chevron_right_outlined,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          )
+                      ],
+                    );
+                  }
+                  return const Text('.....');
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
