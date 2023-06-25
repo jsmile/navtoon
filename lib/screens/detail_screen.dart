@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class DetailCatoon extends StatelessWidget {
+class DetailScreen extends StatelessWidget {
   final String id, title, thumb;
 
-  const DetailCatoon({
+  const DetailScreen({
     super.key,
     required this.id,
     required this.title,

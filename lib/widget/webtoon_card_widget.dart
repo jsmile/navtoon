@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'detail_catoon_widget.dart';
+import '../screens/detail_screen.dart';
 
 class WebtoonCard extends StatelessWidget {
   final String id, title, thumb;
@@ -19,7 +19,7 @@ class WebtoonCard extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DetailCatoon(
+              builder: (context) => DetailScreen(
                 // Card 상세보기
                 id: id,
                 title: title,
