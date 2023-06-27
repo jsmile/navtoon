@@ -110,7 +110,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         for (var episode in snapshot.data!)
                           Container(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
+                              horizontal: 10,
                             ),
                             margin: const EdgeInsets.only(bottom: 10),
                             decoration: BoxDecoration(
@@ -121,7 +121,9 @@ class _DetailScreenState extends State<DetailScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  episode.title,
+                                  episode.title.length > 22
+                                      ? '${episode.title.substring(0, 22)}...'
+                                      : episode.title,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
